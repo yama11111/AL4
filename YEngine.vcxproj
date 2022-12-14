@@ -286,7 +286,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)Base;$(ProjectDir)Base/DX;$(ProjectDir)Input;$(ProjectDir)Math;$(ProjectDir)Game;$(ProjectDir)Collision;$(ProjectDir)Camera;$(ProjectDir)MapChip;$(ProjectDir)Scene;$(ProjectDir)assimp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
