@@ -58,8 +58,11 @@ void GameScene::Load()
 	// ----- モデル ----- //
 
 	cubeM_.reset(Model::Create());
-	//skydomeM_.reset(Model::Load("skydome"));
-	skydomeM_.reset(Model::Load({ "skydome/", "skydome.obj", false, false, true }));
+	skydomeM_.reset(Model::Load("skydome"));
+	triangleM_.reset(Model::Load("triangleMat"));
+	//fighterM_.reset(Model::Load("MiG-25PD"));
+	//skydomeM_.reset(Model::Load({ "skydome/", "skydome.obj", false, false, true }));
+	//skydomeM_.reset(Model::Load({ "skydome/", "skydome.obj", false, false, true }));
 
 	//assimpM_.reset(Model::Load({ "Alicia/FBX/", "Alicia_solid_Unity.FBX", false, true, "tga" }));
 
@@ -121,6 +124,10 @@ void GameScene::Initialize()
 	//enemy_.Initialize({ {0,5.0f,20.0f},{},{5.0f,5.0f,5.0f} });
 	enemy_.Initialize({ {0,0.0f,+100.0f} });
 	enemy_.rota_ = AdjustAngle(Vec3(0, 0, -1));
+
+	triangle_.Initialize({ {},{},{100,100,100} });
+	fighter_.Initialize({});
+
 
 	// マップ初期化
 	//map_.Initialize({ 7.5f, {}});
@@ -214,11 +221,15 @@ void GameScene::Update()
 	player_->UpdateMove();
 	player_->UpdateMatrix();
 
+	triangle_.pos_.x_ += +keys_->Horizontal(Keys::MoveStandard::WASD) * 3.0f;
+	triangle_.pos_.z_ += -keys_->Vertical(Keys::MoveStandard::WASD) * 3.0f;
+	triangle_.Update();
+
 	// カメラ
-	camera_.pos_.x_ += +keys_->Horizontal(Keys::MoveStandard::WASD) * 3.0f;
-	camera_.pos_.z_ += -keys_->Vertical(Keys::MoveStandard::WASD) * 3.0f;
-	camera_.rota_.y_ += +keys_->Horizontal(Keys::MoveStandard::Arrow) * 0.02f;
-	camera_.rota_.x_ += -keys_->Vertical(Keys::MoveStandard::Arrow) * 0.02f;
+	//camera_.pos_.x_ += +keys_->Horizontal(Keys::MoveStandard::WASD) * 3.0f;
+	//camera_.pos_.z_ += -keys_->Vertical(Keys::MoveStandard::WASD) * 3.0f;
+	//camera_.rota_.y_ += +keys_->Horizontal(Keys::MoveStandard::Arrow) * 0.02f;
+	//camera_.rota_.x_ += -keys_->Vertical(Keys::MoveStandard::Arrow) * 0.02f;
 	camera_.Update();
 
 	// ビュープロジェクション
@@ -300,6 +311,9 @@ void GameScene::DrawModels()
 			cubeM_->Draw(floor[i][j], vp_);
 		}
 	}
+
+	triangleM_->Draw(triangle_, vp_);
+	//fighterM_->Draw(fighter_, vp_);
 
 	// player
 	//player_->Draw(vp_);
