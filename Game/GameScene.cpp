@@ -69,11 +69,11 @@ void GameScene::Load()
 	// ----- スプライト ----- //
 
 	curtenS_.reset(Sprite::Create({ WinSize }, { plainT_ }));
-	mapDispS_.reset(Sprite::Create({ {32,32} }, { mapDispT_ }));
+	//mapDispS_.reset(Sprite::Create({ {32,32} }, { mapDispT_ }));
 
 	// ----- マップ ----- //
 
-	map_.Load({ "stage1.csv", cubeM_.get(), mapDispT_, mapDispS_.get()});
+	//map_.Load({ "stage1.csv", cubeM_.get(), mapDispT_, mapDispS_.get()});
 
 	// ----- 静的初期化 ----- //
 
@@ -131,7 +131,7 @@ void GameScene::Initialize()
 
 	// マップ初期化
 	//map_.Initialize({ 7.5f, {}});
-	map_.Initialize({ 7.5f, { 0.0f,+30.0f,-25.0f }});
+	//map_.Initialize({ 7.5f, { 0.0f,+30.0f,-25.0f }});
 
 	// 天球初期化
 	skydome_.Initialize(skydomeM_.get());
@@ -156,8 +156,8 @@ void GameScene::Update()
 	// ホットリロード
 	if (keys_->IsTrigger(DIK_L))
 	{
-		map_.Load({ "stage1.csv", cubeM_.get(), mapDispT_, mapDispS_.get() });
-		map_.Reset({ 0.0f,+30.0f,-25.0f });
+		//map_.Load({ "stage1.csv", cubeM_.get(), mapDispT_, mapDispS_.get() });
+		//map_.Reset({ 0.0f,+30.0f,-25.0f });
 	}
 
 	// リセット
@@ -212,8 +212,8 @@ void GameScene::Update()
 	enemy_.Update();
 
 	// マップマネージャー
-	map_.Update();
-	map_.PerfectPixelCollision(*player_.get());
+	//map_.Update();
+	//map_.PerfectPixelCollision(*player_.get());
 
 	// スカイドーム
 	skydome_.Update();

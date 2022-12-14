@@ -57,7 +57,7 @@ namespace Game
 		// 画面全部
 		std::unique_ptr<Sprite> curtenS_ = nullptr;
 		// マップ2D表示用
-		std::unique_ptr<Sprite> mapDispS_ = nullptr;
+		//std::unique_ptr<Sprite> mapDispS_ = nullptr;
 
 #pragma endregion
 #pragma region ゲームオブジェクト
@@ -77,7 +77,7 @@ namespace Game
 		// 天球
 		Skydome skydome_;
 
-		MapChip map_;
+		//MapChip map_;
 
 		// カメラ
 		Camera camera_;
