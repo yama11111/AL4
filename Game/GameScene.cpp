@@ -59,12 +59,11 @@ void GameScene::Load()
 
 	cubeM_.reset(Model::Create());
 	skydomeM_.reset(Model::Load("skydome"));
-	triangleM_.reset(Model::Load("triangleMat"));
-	//fighterM_.reset(Model::Load("MiG-25PD"));
 	//skydomeM_.reset(Model::Load({ "skydome/", "skydome.obj", false, false, true }));
 	//skydomeM_.reset(Model::Load({ "skydome/", "skydome.obj", false, false, true }));
 
-	//assimpM_.reset(Model::Load({ "Alicia/FBX/", "Alicia_solid_Unity.FBX", false, true, "tga" }));
+	aliciaM_.reset(Model::Load({ "Alicia/FBX/", "Alicia_solid_Unity.FBX", false, true, false, "tga" }));
+	zundamonM_.reset(Model::Load({ "zundamon/", "zundamon.pmx", false, true, false }));
 
 	// ----- スプライト ----- //
 
@@ -122,12 +121,13 @@ void GameScene::Initialize()
 
 	// エネミー初期化
 	//enemy_.Initialize({ {0,5.0f,20.0f},{},{5.0f,5.0f,5.0f} });
-	enemy_.Initialize({ {0,0.0f,+100.0f} });
-	enemy_.rota_ = AdjustAngle(Vec3(0, 0, -1));
+	//enemy_.rota_ = AdjustAngle(Vec3(0, 0, -1));
 
-	triangle_.Initialize({ {},{},{100,100,100} });
-	fighter_.Initialize({});
-
+	alicia_.Initialize({ {-45.0f,0.0f,+100.0f} });
+	alicia_.rota_ = AdjustAngle(Vec3(0, 0, -1));
+	
+	zundamon_.Initialize({ {+45.0f,0.0f,+100.0f}, {}, {10,10,10} });
+	zundamon_.rota_ = AdjustAngle(Vec3(0, 0, -1));
 
 	// マップ初期化
 	//map_.Initialize({ 7.5f, {}});
@@ -139,7 +139,7 @@ void GameScene::Initialize()
 	// カメラ初期化
 	//camera_.Initialize({ {150.0f, 50.0f, -50.0f}, {PI / 16.0f, -PI / 3.0f, 0.0f} });
 	//camera_.Initialize({ {200.0f, -20.0f, 115.0f}, {0.0f, -PI / 2.0f, 0.0f} });
-	camera_.Initialize({ {0.0f,50.0f,-200.0f} });
+	camera_.Initialize({ {0.0f,100.0f,-200.0f} });
 
 	// ビュープロジェクション初期化
 	vp_.Initialize({});
@@ -221,9 +221,14 @@ void GameScene::Update()
 	player_->UpdateMove();
 	player_->UpdateMatrix();
 
-	triangle_.pos_.x_ += +keys_->Horizontal(Keys::MoveStandard::WASD) * 3.0f;
-	triangle_.pos_.z_ += -keys_->Vertical(Keys::MoveStandard::WASD) * 3.0f;
-	triangle_.Update();
+	alicia_.pos_.x_ += +keys_->Horizontal(Keys::MoveStandard::WASD) * 3.0f;
+	alicia_.pos_.z_ += -keys_->Vertical(Keys::MoveStandard::WASD) * 3.0f;
+	alicia_.Update();
+
+	zundamon_.pos_.x_ += +keys_->Horizontal(Keys::MoveStandard::Arrow) * 3.0f;
+	zundamon_.pos_.z_ += -keys_->Vertical(Keys::MoveStandard::Arrow) * 3.0f;
+	zundamon_.Update();
+
 
 	// カメラ
 	//camera_.pos_.x_ += +keys_->Horizontal(Keys::MoveStandard::WASD) * 3.0f;
@@ -312,8 +317,8 @@ void GameScene::DrawModels()
 		}
 	}
 
-	triangleM_->Draw(triangle_, vp_);
-	//fighterM_->Draw(fighter_, vp_);
+	aliciaM_->Draw(alicia_, vp_);
+	zundamonM_->Draw(zundamon_, vp_);
 
 	// player
 	//player_->Draw(vp_);
@@ -321,8 +326,6 @@ void GameScene::DrawModels()
 	//cubeM_->Draw(enemy_, vp_, enemyT_);
 	// map
 	//map_.Draw(vp_);
-
-	//assimpM_->Draw(enemy_, vp_);
 }
 
 void GameScene::DrawFrontSprites()

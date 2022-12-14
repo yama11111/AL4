@@ -44,13 +44,10 @@ namespace Game
 		std::unique_ptr<Model> cubeM_ = nullptr;
 		// 天球モデル
 		std::unique_ptr<Model> skydomeM_ = nullptr;
-		// 三角形モデル
-		std::unique_ptr<Model> triangleM_ = nullptr;
-		// 戦闘機モデル
-		std::unique_ptr<Model> fighterM_ = nullptr;
 
 		// アシンプ確認用モデル
-		std::unique_ptr<Model> assimpM_ = nullptr;
+		std::unique_ptr<Model> aliciaM_ = nullptr;
+		std::unique_ptr<Model> zundamonM_ = nullptr;
 
 		// ----- スプライト ----- //
 		
@@ -71,8 +68,8 @@ namespace Game
 		Object sprite_;
 		Object enemy_;
 
-		Object triangle_;
-		Object fighter_;
+		Object alicia_;
+		Object zundamon_;
 
 		// 天球
 		Skydome skydome_;
