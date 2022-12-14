@@ -2,37 +2,31 @@
 
 using Math::Timer;
 
-Timer::Timer() :
-	timer(0.0f), maxTime(0.0f), increase(0.0f), isEnd(false)
+void Timer::Initialize(const unsigned int time)
 {
+	t_ = time;
+	Reset(false);
 }
 
-Timer::Timer(const float maxTime, const float increase) :
-	timer(0.0f), maxTime(maxTime), increase(increase), isEnd(false)
+void Timer::Reset(const bool isAct)
 {
-}
-
-void Timer::Initialize(const float maxTime, const float increase)
-{
-	timer = 0.0f;
-	this->maxTime = maxTime;
-	this->increase = increase;
-	isEnd = false;
-}
-
-void Timer::Reset()
-{
-	timer = 0.0f;
-	isEnd = false;
+	count_ = 0;
+	isAct_ = isAct;
 }
 
 void Timer::Update()
 {
-	timer += increase;
-	if (maxTime <= timer)
+	if (!isAct_) { return; }
+
+	if (++count_ >= t_)
 	{
-		timer = 0.0f;
-		isEnd = true;
+		count_ = t_;
+		isAct_ = false;
 	}
-	else isEnd = false;
+}
+
+float Timer::Ratio()
+{
+	if (t_ == 0) { return 0.0f; }
+	return static_cast<float>(count_) / static_cast<float>(t_);
 }

@@ -1,40 +1,34 @@
 #pragma once
 #define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
-#include <dinput.h>
-#include "Vec2.h"
-
-#pragma comment(lib, "dinput8.lib")
-#pragma comment(lib, "dxguid.lib")
+#include "Keys.h"
+#include "Mouse.h"
+#include "Pad.h"
 
 namespace Input
 {
-	struct MyMouseState
-	{
-	public:
-		DIMOUSESTATE state;
-		Math::Vec2 pos;
-	public:
-		MyMouseState();
-	};
-
 	class InputManager
 	{
 	private:
-		IDirectInput8* directInput = nullptr;
-		IDirectInputDevice8* keyboard = nullptr;
-		IDirectInputDevice8* mouse = nullptr;
+		Microsoft::WRL::ComPtr<IDirectInput8> directInput_ = nullptr;
+		HWND* pHwnd = nullptr;
+	public:
+		Keys* keys_ = nullptr;
+		Mouse* mouse_ = nullptr;
+		Pad* pad_ = nullptr;
+	public:
+		// 生成 (最初に1回呼ぶ)
+		void Create(const HINSTANCE hInstance, HWND* hwnd);
+		// 入力情報 初期化
+		void Initialize();
+		// 更新処理
+		void Update();
 	public:
 		static InputManager* GetInstance();
-		void Init(const HINSTANCE hInstance, const HWND hwnd);
-		void GetKeyboardState(BYTE key[256]);
-		void GetMouseState(MyMouseState& mouseState, const HWND hwnd);
 	private:
 		InputManager() = default;
-		~InputManager();
+		~InputManager() = default;
 		InputManager(const InputManager&) = delete;
 		const InputManager& operator=(const InputManager&) = delete;
-		void CreateKeyboard(const HWND hwnd);
-		void CreateMouse(const HWND hwnd);
 	};
 }
 

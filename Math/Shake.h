@@ -1,22 +1,24 @@
 #pragma once
 #include "Vec3.h"
-#include "Random.h"
 
 namespace Math
 {
-	class Shake {
+	class Shake
+	{
 	private:
-		Vec3 value{};			// À”’l
-		bool isShake = false;	// —h‚ê‚Ä‚¢‚é‚©
-		float swingValue = 0;	// —h‚ê‚é—Ê (—”)
-		float dekey = 0;		// Œ¸Š—Ê
-		Random* rand = nullptr;
+		// —h‚ê‚Ä‚¢‚é—Ê
+		Vec3 value_{};
+		// —h‚ê‚Ä‚¢‚é‚©
+		bool isAct_ = false;
+		// —h‚ê‚é—Ê (—”)
+		int swing_ = 0;
+		// Œ¸Š—Ê
+		int dekey_ = 0;
 	public:
 		void Initialize();
 		void Update();
-		void Shaking(const float swing, const float dekey);
-		Vec3 GetValue() { return value; }
-		bool IsShake() { return isShake; }
-		float Ratio() { return 1.0f - dekey / swingValue; }
+		void Activate(const int swing, const int dekey);
+		Vec3 Value() { return value_; }
+		bool IsShake() { return isAct_; }
 	};
 }

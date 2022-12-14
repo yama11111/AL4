@@ -1,40 +1,50 @@
 #include "Shake.h"
+#include "YMath.h"
 
 using Math::Shake;
 
 void Shake::Initialize()
 {
-	value = {};
-	isShake = false;
-	swingValue = 0;
-	dekey = 0;
-	rand = Random::GetInstance();
+	value_ = { 0,0,0 };
+	isAct_ = false;
+	swing_ = 0;
+	dekey_ = 0;
 }
 
-void Shake::Shaking(const float swing, const float dekey) 
+void Shake::Activate(const int swing, const int dekey)
 {
-	value = {};
-	isShake = true;
-	this->dekey = dekey;
-	swingValue = swing;
+	if (!isAct_)
+	{
+		value_ = { 0,0,0 };
+		isAct_ = true;
+		dekey_ = dekey;
+		swing_ = swing;
+	}
+	else if (swing_ <= swing)
+	{
+		dekey_ = dekey;
+		swing_ = swing;
+	}
 }
 
-void Shake::Update() {
+void Shake::Update()
+{
 	// ”ÍˆÍ‚ð‹·‚ß‚é
-	if (swingValue > 0) {
-		swingValue -= dekey;
-	}
+	if (swing_ > 0) { swing_ -= dekey_; }
 
 	// ”ÍˆÍ“à‚Ì—”¶¬
-	if (isShake) {
-		value.x = rand->GetRandF(-swingValue, swingValue);
-		value.y = rand->GetRandF(-swingValue, swingValue);
-		value.z = rand->GetRandF(-swingValue, swingValue);
+	if (isAct_)
+	{
+		value_.x_ = static_cast<float>(GetRand(-swing_, swing_));
+		value_.y_ = static_cast<float>(GetRand(-swing_, swing_));
+		value_.z_ = static_cast<float>(GetRand(-swing_, swing_));
 	}
 
-	if (swingValue <= 0) {
-		value = { 0.0f, 0.0f, 0.0f };
-		swingValue = 0;
-		isShake = false;
+	if (swing_ <= 0)
+	{
+		value_ = { 0,0,0 };
+		swing_ = 0;
+		dekey_ = 0;
+		isAct_ = false;
 	}
 }
